@@ -1,0 +1,11 @@
+/home/mago/Development/aaied2/bin/Debug/netcoreapp2.1/aaied2.deps.json
+/home/mago/Development/aaied2/bin/Debug/netcoreapp2.1/aaied2.runtimeconfig.json
+/home/mago/Development/aaied2/bin/Debug/netcoreapp2.1/aaied2.runtimeconfig.dev.json
+/home/mago/Development/aaied2/bin/Debug/netcoreapp2.1/aaied2.dll
+/home/mago/Development/aaied2/bin/Debug/netcoreapp2.1/aaied2.pdb
+/home/mago/Development/aaied2/obj/Debug/netcoreapp2.1/aaied2.csprojAssemblyReference.cache
+/home/mago/Development/aaied2/obj/Debug/netcoreapp2.1/aaied2.csproj.CoreCompileInputs.cache
+/home/mago/Development/aaied2/obj/Debug/netcoreapp2.1/aaied2.AssemblyInfoInputs.cache
+/home/mago/Development/aaied2/obj/Debug/netcoreapp2.1/aaied2.AssemblyInfo.cs
+/home/mago/Development/aaied2/obj/Debug/netcoreapp2.1/aaied2.dll
+/home/mago/Development/aaied2/obj/Debug/netcoreapp2.1/aaied2.pdb
