@@ -687,11 +687,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/mago/Development/aaied2/aaied2.csproj",
+      "projectUniqueName": "/home/mago/Development/aaied2/c#/aaied2.csproj",
       "projectName": "aaied2",
-      "projectPath": "/home/mago/Development/aaied2/aaied2.csproj",
+      "projectPath": "/home/mago/Development/aaied2/c#/aaied2.csproj",
       "packagesPath": "/home/mago/.nuget/packages/",
-      "outputPath": "/home/mago/Development/aaied2/obj/",
+      "outputPath": "/home/mago/Development/aaied2/c#/obj/",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "/usr/share/dotnet/sdk/NuGetFallbackFolder"

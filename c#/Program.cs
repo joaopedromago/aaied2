@@ -6,8 +6,8 @@ namespace aaied2
 {
     class Program
     {
-        public static int lenX = 20;
         public static int lenY = 20;
+        public static int lenX = 20;
         public static List<Campo> campos = new List<Campo>();
         public static int contador = 0;
 
@@ -20,9 +20,9 @@ namespace aaied2
         }
         public static void MontarCampos()
         {
-            for (int i = 0; i < lenX; i++)
+            for (int i = 0; i < lenY; i++)
             {
-                for (int j = 0; j < lenY; j++)
+                for (int j = 0; j < lenX; j++)
                 {
                     var campo = new Campo();
                     campo.Montar(i, j);
@@ -32,9 +32,9 @@ namespace aaied2
         }
         public static void ExibirCampos()
         {
-            for (int i = 0; i < lenX; i++)
+            for (int i = 0; i < lenY; i++)
             {
-                for (int j = 0; j < lenY; j++)
+                for (int j = 0; j < lenX; j++)
                 {
                     var campo = campos.FirstOrDefault(x => x.X == i && x.Y == j);
                     Console.Write(campo.Indicador);
@@ -49,9 +49,9 @@ namespace aaied2
         }
         public static void RealizarContagem()
         {
-            for (int i = 0; i < lenX; i++)
+            for (int i = 0; i < lenY; i++)
             {
-                for (int j = 0; j < lenY; j++)
+                for (int j = 0; j < lenX; j++)
                 {
                     var campo = campos.FirstOrDefault(x => x.X == i && x.Y == j);
                     ValidarGrupo(campo);
@@ -89,9 +89,9 @@ namespace aaied2
             var xLocal = campo.X;
             var xPosterior = campo.X + 1;
 
-            if (yAcima >= 0 && yAcima < lenY)
+            if (yAcima >= 0 && yAcima < lenX)
             {
-                if (xAnterior >= 0 && xAnterior < lenX)
+                if (xAnterior >= 0 && xAnterior < lenY)
                 {
                     var campoAtual = campos.FirstOrDefault(x => x.Y == yAcima && x.X == xAnterior);
                     if (campoAtual.ValidarCampoValor())
@@ -99,7 +99,7 @@ namespace aaied2
                         return campoAtual.Valor;
                     }
                 }
-                if (xLocal >= 0 && xLocal < lenX)
+                if (xLocal >= 0 && xLocal < lenY)
                 {
                     var campoAtual = campos.FirstOrDefault(x => x.Y == yAcima && x.X == xLocal);
                     if (campoAtual.ValidarCampoValor())
@@ -107,7 +107,7 @@ namespace aaied2
                         return campoAtual.Valor;
                     }
                 }
-                if (xPosterior >= 0 && xPosterior < lenX)
+                if (xPosterior >= 0 && xPosterior < lenY)
                 {
                     var campoAtual = campos.FirstOrDefault(x => x.Y == yAcima && x.X == xPosterior);
                     if (campoAtual.ValidarCampoValor())
@@ -124,9 +124,9 @@ namespace aaied2
             var yAtual = campo.Y;
             var xPosterior = campo.X + 1;
 
-            if (yAtual >= 0 && yAtual < lenY)
+            if (yAtual >= 0 && yAtual < lenX)
             {
-                if (xPosterior >= 0 && xPosterior < lenX)
+                if (xPosterior >= 0 && xPosterior < lenY)
                 {
                     var campoAtual = campos.FirstOrDefault(x => x.Y == yAtual && x.X == xPosterior);
                     if (campoAtual.ValidarCampoValor())
@@ -143,9 +143,9 @@ namespace aaied2
             var yAtual = campo.Y;
             var xAnterior = campo.X - 1;
 
-            if (yAtual >= 0 && yAtual < lenY)
+            if (yAtual >= 0 && yAtual < lenX)
             {
-                if (xAnterior >= 0 && xAnterior < lenX)
+                if (xAnterior >= 0 && xAnterior < lenY)
                 {
                     var campoAtual = campos.FirstOrDefault(x => x.Y == yAtual && x.X == xAnterior);
                     if (campoAtual.ValidarCampoValor())
@@ -164,9 +164,9 @@ namespace aaied2
             var xLocal = campo.X;
             var xPosterior = campo.X + 1;
 
-            if (yAbaixo >= 0 && yAbaixo < lenY)
+            if (yAbaixo >= 0 && yAbaixo < lenX)
             {
-                if (xAnterior >= 0 && xAnterior < lenX)
+                if (xAnterior >= 0 && xAnterior < lenY)
                 {
                     var campoAtual = campos.FirstOrDefault(x => x.Y == yAbaixo && x.X == xAnterior);
                     if (campoAtual.ValidarCampoValor())
@@ -174,7 +174,7 @@ namespace aaied2
                         return campoAtual.Valor;
                     }
                 }
-                if (xLocal >= 0 && xLocal < lenX)
+                if (xLocal >= 0 && xLocal < lenY)
                 {
                     var campoAtual = campos.FirstOrDefault(x => x.Y == yAbaixo && x.X == xLocal);
                     if (campoAtual.ValidarCampoValor())
@@ -182,7 +182,7 @@ namespace aaied2
                         return campoAtual.Valor;
                     }
                 }
-                if (xPosterior >= 0 && xPosterior < lenX)
+                if (xPosterior >= 0 && xPosterior < lenY)
                 {
                     var campoAtual = campos.FirstOrDefault(x => x.Y == yAbaixo && x.X == xPosterior);
                     if (campoAtual.ValidarCampoValor())
