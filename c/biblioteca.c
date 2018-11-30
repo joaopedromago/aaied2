@@ -1,101 +1,166 @@
 #include "biblioteca.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-void MontarCampos()
+void MontarCampos(Campo *campos)
 {
-    for (int i = 0; i < lenY; i++)
+    int x = 0;
+    int y = 0;
+
+    Campo *campo = campos;
+    while (campo->proximo != NULL)
     {
-        for (int j = 0; j < lenX; j++)
+        int random = Next(0, 1000);
+        campo->proximo = campos++;
+        campo->X = x;
+        campo->Y = y;
+        campo->Indicador = random > 800 ? 1 : 0;
+        campo->Valor = 0;
+
+        x = x == lenX ? 0 : x + 1;
+        y = y == lenY ? 0 : y + 1;
+    }
+}
+
+void AtribuirPorArquivo(Campo *campos)
+{
+    FILE *fp;
+
+    fp = fopen(file, "r");
+
+    if (fp == NULL)
+    {
+        perror("Erro de leitura");
+    }
+
+    fscanf(fp, "%d %d", &lenX, &lenY);
+
+    char readerPoint;
+    int x = 0;
+    int y = 0;
+
+    while ((readerPoint = fgetc(fp)) != EOF)
+    {
+        if (readerPoint != ' ' && readerPoint != '\n')
         {
-            Campo campo = Montar(i, j);
-            campos.Add(campo);
+            Campo *atual = malloc(sizeof(Campo));
+
+            atual->X = x;
+            atual->Y = y;
+            atual->Indicador = (int)readerPoint;
+            atual->Valor = 0;
+
+            if (campos != NULL)
+            {
+                campos->proximo = atual;
+            }
+            else
+            {
+                campos = atual;
+            }
+            campos++;
+
+            y++;
+            if (y == lenY)
+            {
+                y = 0;
+                x++;
+            }
+            if (x == lenX)
+            {
+                break;
+            }
         }
     }
 }
 
-void ExibirCampos()
+void ExibirCampos(Campo *campos)
 {
-    for (int i = 0; i < lenY; i++)
+    Campo *campo = campos;
+
+    while (campo != NULL)
     {
-        for (int j = 0; j < lenX; j++)
+        if (campo->X == 0)
         {
-            var campo = campos.FirstOrDefault(x = > x.X == i && x.Y == j);
-            Console.Write(campo.Indicador);
+            printf("\n");
         }
-        Console.WriteLine();
+        printf("%d", campo->Indicador);
+
+        campo = campo->proximo;
     }
 }
 
 void ExibirContador()
 {
-    Console.WriteLine("Total: " + contador);
+    printf("Total: %d", contador);
 }
 
-void RealizarContagem()
+void RealizarContagem(Campo *campos)
 {
     for (int i = 0; i < lenY; i++)
     {
         for (int j = 0; j < lenX; j++)
         {
-            var campo = campos.FirstOrDefault(x = > x.X == i && x.Y == j);
-            ValidarGrupo(campo);
+            Campo *campo = ObterCampoPorCoordenada(campos, i, j);
+            ValidarGrupo(campos, campo);
         }
     }
 }
 
-void ValidarGrupo(Campo campo)
+void ValidarGrupo(Campo *campos, Campo *campo)
 {
-    if (campo.Indicador == 1)
+    if (campo->Indicador == 1)
     {
         int auxValor = 0, auxValidador = 0;
 
         // validar parte acima
-        auxValidador = ValidarAcima(campo);
+        auxValidador = ValidarAcima(campos, campo);
         auxValor = auxValidador == 0 ? auxValor : auxValidador;
         // validar posterior
-        auxValidador = ValidarPosterior(campo);
+        auxValidador = ValidarPosterior(campos, campo);
         auxValor = auxValidador == 0 ? auxValor : auxValidador;
         // validar anterior
-        auxValidador = ValidarAnterior(campo);
+        auxValidador = ValidarAnterior(campos, campo);
         auxValor = auxValidador == 0 ? auxValor : auxValidador;
         // validar campos abaixo
-        auxValidador = ValidarAbaixo(campo);
+        auxValidador = ValidarAbaixo(campos, campo);
         auxValor = auxValidador == 0 ? auxValor : auxValidador;
 
-        campo.Valor = auxValor == 0 ? ++contador : auxValor;
+        campo->Valor = auxValor == 0 ? ++contador : auxValor;
     }
 }
 
-int ValidarAcima(Campo campo)
+int ValidarAcima(Campo *campos, Campo *campo)
 {
-    var yAcima = campo.Y - 1;
-    var xAnterior = campo.X - 1;
-    var xLocal = campo.X;
-    var xPosterior = campo.X + 1;
+    int yAcima = campo->Y - 1;
+    int xAnterior = campo->X - 1;
+    int xLocal = campo->X;
+    int xPosterior = campo->X + 1;
 
     if (yAcima >= 0 && yAcima < lenX)
     {
         if (xAnterior >= 0 && xAnterior < lenY)
         {
-            var campoAtual = campos.FirstOrDefault(x = > x.Y == yAcima && x.X == xAnterior);
-            if (campoAtual.ValidarCampoValor())
+            Campo *campoAtual = ObterCampoPorCoordenada(campos, yAcima, xAnterior);
+            if (ValidarCampoValor(campoAtual->Indicador, campoAtual->Valor))
             {
-                return campoAtual.Valor;
+                return campoAtual->Valor;
             }
         }
         if (xLocal >= 0 && xLocal < lenY)
         {
-            var campoAtual = campos.FirstOrDefault(x = > x.Y == yAcima && x.X == xLocal);
-            if (campoAtual.ValidarCampoValor())
+            Campo *campoAtual = ObterCampoPorCoordenada(campos, yAcima, xLocal);
+            if (ValidarCampoValor(campoAtual->Indicador, campoAtual->Valor))
             {
-                return campoAtual.Valor;
+                return campoAtual->Valor;
             }
         }
         if (xPosterior >= 0 && xPosterior < lenY)
         {
-            var campoAtual = campos.FirstOrDefault(x = > x.Y == yAcima && x.X == xPosterior);
-            if (campoAtual.ValidarCampoValor())
+            Campo *campoAtual = ObterCampoPorCoordenada(campos, yAcima, xPosterior);
+            if (ValidarCampoValor(campoAtual->Indicador, campoAtual->Valor))
             {
-                return campoAtual.Valor;
+                return campoAtual->Valor;
             }
         }
     }
@@ -103,19 +168,19 @@ int ValidarAcima(Campo campo)
     return 0;
 }
 
-int ValidarPosterior(Campo campo)
+int ValidarPosterior(Campo *campos, Campo *campo)
 {
-    var yAtual = campo.Y;
-    var xPosterior = campo.X + 1;
+    int yAtual = campo->Y;
+    int xPosterior = campo->X + 1;
 
     if (yAtual >= 0 && yAtual < lenX)
     {
         if (xPosterior >= 0 && xPosterior < lenY)
         {
-            var campoAtual = campos.FirstOrDefault(x = > x.Y == yAtual && x.X == xPosterior);
-            if (campoAtual.ValidarCampoValor())
+            Campo *campoAtual = ObterCampoPorCoordenada(campos, yAtual, xPosterior);
+            if (ValidarCampoValor(campoAtual->Indicador, campoAtual->Valor))
             {
-                return campoAtual.Valor;
+                return campoAtual->Valor;
             }
         }
     }
@@ -123,19 +188,19 @@ int ValidarPosterior(Campo campo)
     return 0;
 }
 
-int ValidarAnterior(Campo campo)
+int ValidarAnterior(Campo *campos, Campo *campo)
 {
-    var yAtual = campo.Y;
-    var xAnterior = campo.X - 1;
+    int yAtual = campo->Y;
+    int xAnterior = campo->X - 1;
 
     if (yAtual >= 0 && yAtual < lenX)
     {
         if (xAnterior >= 0 && xAnterior < lenY)
         {
-            var campoAtual = campos.FirstOrDefault(x = > x.Y == yAtual && x.X == xAnterior);
-            if (campoAtual.ValidarCampoValor())
+            Campo *campoAtual = ObterCampoPorCoordenada(campos, yAtual, xAnterior);
+            if (ValidarCampoValor(campoAtual->Indicador, campoAtual->Valor))
             {
-                return campoAtual.Valor;
+                return campoAtual->Valor;
             }
         }
     }
@@ -143,37 +208,37 @@ int ValidarAnterior(Campo campo)
     return 0;
 }
 
-int ValidarAbaixo(Campo campo)
+int ValidarAbaixo(Campo *campos, Campo *campo)
 {
-    var yAbaixo = campo.Y + 1;
-    var xAnterior = campo.X - 1;
-    var xLocal = campo.X;
-    var xPosterior = campo.X + 1;
+    int yAbaixo = campo->Y + 1;
+    int xAnterior = campo->X - 1;
+    int xLocal = campo->X;
+    int xPosterior = campo->X + 1;
 
     if (yAbaixo >= 0 && yAbaixo < lenX)
     {
         if (xAnterior >= 0 && xAnterior < lenY)
         {
-            var campoAtual = campos.FirstOrDefault(x = > x.Y == yAbaixo && x.X == xAnterior);
-            if (campoAtual.ValidarCampoValor())
+            Campo *campoAtual = ObterCampoPorCoordenada(campos, yAbaixo, xAnterior);
+            if (ValidarCampoValor(campoAtual->Indicador, campoAtual->Valor))
             {
-                return campoAtual.Valor;
+                return campoAtual->Valor;
             }
         }
         if (xLocal >= 0 && xLocal < lenY)
         {
-            var campoAtual = campos.FirstOrDefault(x = > x.Y == yAbaixo && x.X == xLocal);
-            if (campoAtual.ValidarCampoValor())
+            Campo *campoAtual = ObterCampoPorCoordenada(campos, yAbaixo, xLocal);
+            if (ValidarCampoValor(campoAtual->Indicador, campoAtual->Valor))
             {
-                return campoAtual.Valor;
+                return campoAtual->Valor;
             }
         }
         if (xPosterior >= 0 && xPosterior < lenY)
         {
-            var campoAtual = campos.FirstOrDefault(x = > x.Y == yAbaixo && x.X == xPosterior);
-            if (campoAtual.ValidarCampoValor())
+            Campo *campoAtual = ObterCampoPorCoordenada(campos, yAbaixo, xPosterior);
+            if (ValidarCampoValor(campoAtual->Indicador, campoAtual->Valor))
             {
-                return campoAtual.Valor;
+                return campoAtual->Valor;
             }
         }
     }
@@ -181,14 +246,18 @@ int ValidarAbaixo(Campo campo)
     return 0;
 }
 
-void Montar(int i, int j, int Indicador, int Valor)
+Campo *ObterCampoPorCoordenada(Campo *campos, int y, int x)
 {
-    Random random = new Random();
+    Campo *campo = campos;
+    while (campo->proximo != NULL)
+    {
+        if (campo->Y == y && campo->X == x)
+        {
+            break;
+        }
+    }
 
-    X = i;
-    Y = j;
-    Indicador = random.Next(0, 1000) > 800 ? 1 : 0;
-    Valor = 0;
+    return campo;
 }
 
 int ValidarCampoValor(int Indicador, int Valor)

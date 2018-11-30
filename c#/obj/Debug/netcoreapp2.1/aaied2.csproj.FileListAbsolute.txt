@@ -20,3 +20,14 @@
 /home/mago/Development/aaied2/c#/obj/Debug/netcoreapp2.1/aaied2.AssemblyInfo.cs
 /home/mago/Development/aaied2/c#/obj/Debug/netcoreapp2.1/aaied2.dll
 /home/mago/Development/aaied2/c#/obj/Debug/netcoreapp2.1/aaied2.pdb
+A:\Development\aaiED2\aaied2\c#\bin\Debug\netcoreapp2.1\aaied2.deps.json
+A:\Development\aaiED2\aaied2\c#\bin\Debug\netcoreapp2.1\aaied2.runtimeconfig.json
+A:\Development\aaiED2\aaied2\c#\bin\Debug\netcoreapp2.1\aaied2.runtimeconfig.dev.json
+A:\Development\aaiED2\aaied2\c#\bin\Debug\netcoreapp2.1\aaied2.dll
+A:\Development\aaiED2\aaied2\c#\bin\Debug\netcoreapp2.1\aaied2.pdb
+A:\Development\aaiED2\aaied2\c#\obj\Debug\netcoreapp2.1\aaied2.csprojAssemblyReference.cache
+A:\Development\aaiED2\aaied2\c#\obj\Debug\netcoreapp2.1\aaied2.csproj.CoreCompileInputs.cache
+A:\Development\aaiED2\aaied2\c#\obj\Debug\netcoreapp2.1\aaied2.AssemblyInfoInputs.cache
+A:\Development\aaiED2\aaied2\c#\obj\Debug\netcoreapp2.1\aaied2.AssemblyInfo.cs
+A:\Development\aaiED2\aaied2\c#\obj\Debug\netcoreapp2.1\aaied2.dll
+A:\Development\aaiED2\aaied2\c#\obj\Debug\netcoreapp2.1\aaied2.pdb
